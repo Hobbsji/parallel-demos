@@ -7,10 +7,13 @@
 
 static const double I_true = 0.7468241328124271;
 
-double monte_carlo_pi(long long N, unsigned int seed);
-double monte_carlo_pi_omp(long long N, unsigned int seed);
-double monte_carlo_integral(long long N, unsigned int seed);
-double monte_carlo_integral_omp(long long N, unsigned int seed);
+#ifdef SQ
+    double monte_carlo_pi(long long N, unsigned int seed);
+    double monte_carlo_integral(long long N, unsigned int seed);
+#else
+    double monte_carlo_pi_omp(long long N, unsigned int seed);
+    double monte_carlo_integral_omp(long long N, unsigned int seed);
+#endif
 
 int main(int argc, char* argv[]) {
     long long N = 1000000;
