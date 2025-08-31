@@ -1,0 +1,379 @@
+===== Running Sequential Version =====
+Samples N = 100000000, Seed = 1756657368
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141601480000, True pi = 3.141592653590
+Absolute error = 8.826410e-06
+Time elapsed = 3.209725 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746804540868, True I = 0.746824132812
+Absolute error = 1.959194e-05
+Time elapsed = 0.818228 sec
+Samples N = 100000000, Seed = 1756657373
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141828320000, True pi = 3.141592653590
+Absolute error = 2.356664e-04
+Time elapsed = 2.826084 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746841986790, True I = 0.746824132812
+Absolute error = 1.785398e-05
+Time elapsed = 0.879712 sec
+Samples N = 100000000, Seed = 1756657376
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141475920000, True pi = 3.141592653590
+Absolute error = 1.167336e-04
+Time elapsed = 2.915742 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746864443123, True I = 0.746824132812
+Absolute error = 4.031031e-05
+Time elapsed = 0.866555 sec
+
+===== Running OpenMP Version =====
+---- OMP_NUM_THREADS=2 ----
+Samples N = 100000000, Seed = 1756657380
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141430240000, True pi = 3.141592653590
+Absolute error = 1.624136e-04
+Time elapsed = 0.883922 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746828961206, True I = 0.746824132812
+Absolute error = 4.828394e-06
+Time elapsed = 0.819187 sec
+Samples N = 100000000, Seed = 1756657382
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141559720000, True pi = 3.141592653590
+Absolute error = 3.293359e-05
+Time elapsed = 0.780865 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746836333215, True I = 0.746824132812
+Absolute error = 1.220040e-05
+Time elapsed = 0.892447 sec
+Samples N = 100000000, Seed = 1756657383
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141589480000, True pi = 3.141592653590
+Absolute error = 3.173590e-06
+Time elapsed = 0.814818 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746825156467, True I = 0.746824132812
+Absolute error = 1.023655e-06
+Time elapsed = 0.826677 sec
+Average: Pi=0.826535 s, Int=0.846104 s, Total=1.672637 s
+
+---- OMP_NUM_THREADS=4 ----
+Samples N = 100000000, Seed = 1756657383
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141469480000, True pi = 3.141592653590
+Absolute error = 1.231736e-04
+Time elapsed = 1.199143 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746825156467, True I = 0.746824132812
+Absolute error = 1.023655e-06
+Time elapsed = 0.967234 sec
+Samples N = 100000000, Seed = 1756657384
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141830240000, True pi = 3.141592653590
+Absolute error = 2.375864e-04
+Time elapsed = 0.877640 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746802616078, True I = 0.746824132812
+Absolute error = 2.151673e-05
+Time elapsed = 0.978098 sec
+Samples N = 100000000, Seed = 1756657386
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141508440000, True pi = 3.141592653590
+Absolute error = 8.421359e-05
+Time elapsed = 1.042012 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746812465862, True I = 0.746824132812
+Absolute error = 1.166695e-05
+Time elapsed = 0.933376 sec
+Average: Pi=1.039598 s, Int=0.959569 s, Total=1.999170 s
+
+---- OMP_NUM_THREADS=6 ----
+Samples N = 100000000, Seed = 1756657387
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141440120000, True pi = 3.141592653590
+Absolute error = 1.525336e-04
+Time elapsed = 0.960282 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746809718368, True I = 0.746824132812
+Absolute error = 1.441444e-05
+Time elapsed = 0.878249 sec
+Samples N = 100000000, Seed = 1756657388
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141489840000, True pi = 3.141592653590
+Absolute error = 1.028136e-04
+Time elapsed = 0.985126 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746832730294, True I = 0.746824132812
+Absolute error = 8.597481e-06
+Time elapsed = 0.923333 sec
+Samples N = 100000000, Seed = 1756657389
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141500480000, True pi = 3.141592653590
+Absolute error = 9.217359e-05
+Time elapsed = 1.019926 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746808087881, True I = 0.746824132812
+Absolute error = 1.604493e-05
+Time elapsed = 0.970662 sec
+Average: Pi=0.988445 s, Int=0.924081 s, Total=1.912527 s
+
+---- OMP_NUM_THREADS=8 ----
+Samples N = 100000000, Seed = 1756657390
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141996440000, True pi = 3.141592653590
+Absolute error = 4.037864e-04
+Time elapsed = 1.006383 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746824584619, True I = 0.746824132812
+Absolute error = 4.518064e-07
+Time elapsed = 0.973435 sec
+Samples N = 100000000, Seed = 1756657391
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141536640000, True pi = 3.141592653590
+Absolute error = 5.601359e-05
+Time elapsed = 1.112491 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746801929201, True I = 0.746824132812
+Absolute error = 2.220361e-05
+Time elapsed = 1.018850 sec
+Samples N = 100000000, Seed = 1756657393
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141565480000, True pi = 3.141592653590
+Absolute error = 2.717359e-05
+Time elapsed = 1.017754 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746878056412, True I = 0.746824132812
+Absolute error = 5.392360e-05
+Time elapsed = 1.036216 sec
+Average: Pi=1.045543 s, Int=1.009500 s, Total=2.055043 s
+
+
+===== Summary (Averaged over 3 runs) =====
+Sequential baselines: Pi=2.983850s, Int=0.854832s, Total=3.838683s
+Threads    Pi(s)        Int(s)       Total(s)     Pi%      Int%     PiSpd    IntSpd   TotSpd  
+2          0.826535     0.846104     1.672637     49.4%    50.6%    x3.61    x1.01    x2.29   
+4          1.039598     0.959569     1.999170     52.0%    48.0%    x2.87    x0.89    x1.92   
+6          0.988445     0.924081     1.912527     51.7%    48.3%    x3.02    x0.93    x2.01   
+8          1.045543     1.009500     2.055043     50.9%    49.1%    x2.85    x0.85    x1.87   
+===== Running Sequential Version =====
+Samples N = 100000000, Seed = 1756657527
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141509200000, True pi = 3.141592653590
+Absolute error = 8.345359e-05
+Time elapsed = 2.902989 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746790807490, True I = 0.746824132812
+Absolute error = 3.332532e-05
+Time elapsed = 0.817297 sec
+Samples N = 100000000, Seed = 1756657531
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141980840000, True pi = 3.141592653590
+Absolute error = 3.881864e-04
+Time elapsed = 2.962744 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746819217933, True I = 0.746824132812
+Absolute error = 4.914880e-06
+Time elapsed = 0.912716 sec
+Samples N = 100000000, Seed = 1756657535
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141668360000, True pi = 3.141592653590
+Absolute error = 7.570641e-05
+Time elapsed = 3.091801 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746838507064, True I = 0.746824132812
+Absolute error = 1.437425e-05
+Time elapsed = 0.943819 sec
+
+===== Running OpenMP Version =====
+---- OMP_NUM_THREADS=2 ----
+Samples N = 100000000, Seed = 1756657539
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141598200000, True pi = 3.141592653590
+Absolute error = 5.546410e-06
+Time elapsed = 0.828455 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746801433514, True I = 0.746824132812
+Absolute error = 2.269930e-05
+Time elapsed = 0.907539 sec
+Samples N = 100000000, Seed = 1756657540
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141565080000, True pi = 3.141592653590
+Absolute error = 2.757359e-05
+Time elapsed = 0.823475 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746866050487, True I = 0.746824132812
+Absolute error = 4.191767e-05
+Time elapsed = 0.843825 sec
+Samples N = 100000000, Seed = 1756657540
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141565080000, True pi = 3.141592653590
+Absolute error = 2.757359e-05
+Time elapsed = 0.788622 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746866050487, True I = 0.746824132812
+Absolute error = 4.191767e-05
+Time elapsed = 0.862902 sec
+Average: Pi=0.813517 s, Int=0.871422 s, Total=1.684937 s
+
+---- OMP_NUM_THREADS=4 ----
+Samples N = 100000000, Seed = 1756657542
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141338560000, True pi = 3.141592653590
+Absolute error = 2.540936e-04
+Time elapsed = 0.837016 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746827155848, True I = 0.746824132812
+Absolute error = 3.023036e-06
+Time elapsed = 0.837304 sec
+Samples N = 100000000, Seed = 1756657543
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141610000000, True pi = 3.141592653590
+Absolute error = 1.734641e-05
+Time elapsed = 0.829811 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746818389955, True I = 0.746824132812
+Absolute error = 5.742858e-06
+Time elapsed = 0.858885 sec
+Samples N = 100000000, Seed = 1756657544
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141660520000, True pi = 3.141592653590
+Absolute error = 6.786641e-05
+Time elapsed = 0.969148 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746819977135, True I = 0.746824132812
+Absolute error = 4.155677e-06
+Time elapsed = 0.847985 sec
+Average: Pi=0.878658 s, Int=0.848058 s, Total=1.726717 s
+
+---- OMP_NUM_THREADS=6 ----
+Samples N = 100000000, Seed = 1756657545
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141617040000, True pi = 3.141592653590
+Absolute error = 2.438641e-05
+Time elapsed = 0.946829 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746820631512, True I = 0.746824132812
+Absolute error = 3.501300e-06
+Time elapsed = 0.932146 sec
+Samples N = 100000000, Seed = 1756657546
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141338320000, True pi = 3.141592653590
+Absolute error = 2.543336e-04
+Time elapsed = 0.954356 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746831715067, True I = 0.746824132812
+Absolute error = 7.582255e-06
+Time elapsed = 0.892149 sec
+Samples N = 100000000, Seed = 1756657547
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141593080000, True pi = 3.141592653590
+Absolute error = 4.264102e-07
+Time elapsed = 0.927121 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746794214332, True I = 0.746824132812
+Absolute error = 2.991848e-05
+Time elapsed = 0.793741 sec
+Average: Pi=0.942769 s, Int=0.872679 s, Total=1.815450 s
+
+---- OMP_NUM_THREADS=8 ----
+Samples N = 100000000, Seed = 1756657548
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141470800000, True pi = 3.141592653590
+Absolute error = 1.218536e-04
+Time elapsed = 0.989075 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746808056405, True I = 0.746824132812
+Absolute error = 1.607641e-05
+Time elapsed = 0.842689 sec
+Samples N = 100000000, Seed = 1756657549
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141916000000, True pi = 3.141592653590
+Absolute error = 3.233464e-04
+Time elapsed = 0.945256 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746783041264, True I = 0.746824132812
+Absolute error = 4.109155e-05
+Time elapsed = 0.890116 sec
+Samples N = 100000000, Seed = 1756657550
+===== Task 1: Monte Carlo Pi Estimation =====
+Estimated pi = 3.141788280000, True pi = 3.141592653590
+Absolute error = 1.956264e-04
+Time elapsed = 0.943795 sec
+===== Task 2: Monte Carlo Integration =====
+Estimated I = 0.746807253478, True I = 0.746824132812
+Absolute error = 1.687933e-05
+Time elapsed = 0.792486 sec
+Average: Pi=0.959375 s, Int=0.841764 s, Total=1.801137 s
+
+
+===== Summary (Averaged over 3 runs) =====
+Sequential baselines: Pi=2.985845s, Int=0.891277s, Total=3.877123s
+Threads    Pi(s)        Int(s)       Total(s)     Pi%      Int%     PiSpd    IntSpd   TotSpd  
+2          0.813517     0.871422     1.684937     48.3%    51.7%    x3.67    x1.02    x2.30   
+4          0.878658     0.848058     1.726717     50.9%    49.1%    x3.40    x1.05    x2.25   
+6          0.942769     0.872679     1.815450     51.9%    48.1%    x3.17    x1.02    x2.14   
+8          0.959375     0.841764     1.801137     53.3%    46.7%    x3.11    x1.06    x2.15   
+===============================
+ Problem size N = 10000
+===============================
+Sequential baselines: Pi=0.000278 s, Int=0.000090 s, Total=0.000368 s
+
+Threads  Pi(s)        Int(s)       Total(s)     PiSpd    IntSpd   TotSpd  
+1        0.000075     0.000082     0.000158     x3.71    x1.10    x2.33   
+2        0.000224     0.000208     0.000432     x1.24    x0.43    x0.85   
+4        0.000547     0.000115     0.000662     x0.51    x0.78    x0.56   
+8        0.003266     0.000219     0.003485     x0.09    x0.41    x0.11   
+16       0.005599     0.000176     0.005774     x0.05    x0.51    x0.06   
+
+===============================
+ Problem size N = 100000
+===============================
+Sequential baselines: Pi=0.003180 s, Int=0.001021 s, Total=0.004201 s
+
+Threads  Pi(s)        Int(s)       Total(s)     PiSpd    IntSpd   TotSpd  
+1        0.000734     0.000801     0.001535     x4.33    x1.27    x2.74   
+2        0.000677     0.002305     0.002983     x4.70    x0.44    x1.41   
+4        0.000946     0.000906     0.001852     x3.36    x1.13    x2.27   
+8        0.002464     0.005591     0.008055     x1.29    x0.18    x0.52   
+16       0.006146     0.001482     0.007627     x0.52    x0.69    x0.55   
+
+===============================
+ Problem size N = 1000000
+===============================
+Sequential baselines: Pi=0.028936 s, Int=0.008673 s, Total=0.037609 s
+
+Threads  Pi(s)        Int(s)       Total(s)     PiSpd    IntSpd   TotSpd  
+1        0.007093     0.008065     0.015158     x4.08    x1.08    x2.48   
+2        0.006283     0.011572     0.017855     x4.61    x0.75    x2.11   
+4        0.007303     0.021764     0.029067     x3.96    x0.40    x1.29   
+8        0.004772     0.031610     0.036382     x6.06    x0.27    x1.03   
+16       0.016223     0.008733     0.024956     x1.78    x0.99    x1.51   
+
+===============================
+ Problem size N = 10000000
+===============================
+Sequential baselines: Pi=0.271449 s, Int=0.072811 s, Total=0.344260 s
+
+Threads  Pi(s)        Int(s)       Total(s)     PiSpd    IntSpd   TotSpd  
+1        0.074924     0.082108     0.157032     x3.62    x0.89    x2.19   
+2        0.068685     0.081538     0.150223     x3.95    x0.89    x2.29   
+4        0.076270     0.087973     0.164243     x3.56    x0.83    x2.10   
+8        0.093842     0.105460     0.199302     x2.89    x0.69    x1.73   
+16       0.104511     0.078564     0.183076     x2.60    x0.93    x1.88   
+
+===============================
+ Problem size N = 100000000
+===============================
+Sequential baselines: Pi=3.062892 s, Int=0.836694 s, Total=3.899590 s
+
+Threads  Pi(s)        Int(s)       Total(s)     PiSpd    IntSpd   TotSpd  
+1        0.717298     0.913419     1.630717     x4.27    x0.92    x2.39   
+2        0.834373     0.869728     1.704100     x3.67    x0.96    x2.29   
+4        0.768609     0.766312     1.534923     x3.98    x1.09    x2.54   
+8        0.929358     0.810141     1.739500     x3.30    x1.03    x2.24   
+16       0.992644     0.780515     1.773160     x3.09    x1.07    x2.20   
+
+===============================
+ Problem size N = 1000000000
+===============================

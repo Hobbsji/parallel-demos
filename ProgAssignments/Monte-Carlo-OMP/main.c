@@ -32,7 +32,11 @@ int main(int argc, char* argv[]) {
     // Run Task 1: Monte Carlo Pi Estimation
     clock_t start = clock();
     // TODO: replace the function name with the seq/omp version
-    double pi_hat = monte_carlo_pi_omp(N, seed);
+    #ifdef SQ
+        double pi_hat = monte_carlo_pi(N, seed);
+    #else
+        double pi_hat = monte_carlo_pi_omp(N, seed);
+    #endif
     clock_t end = clock();
 
     double abs_err = fabs(pi_hat - M_PI);
@@ -47,7 +51,12 @@ int main(int argc, char* argv[]) {
     // Run Task 2: Monte Carlo Integration
     start = clock();
     // TODO: replace the function name with the seq/omp version
-    double I_hat = monte_carlo_integral_omp(N, seed);
+    #ifdef SQ
+        double I_hat = monte_carlo_integral(N, seed);
+    #else
+        double I_hat = monte_carlo_integral_omp(N, seed);
+    #endif
+    
     end = clock();
     abs_err = fabs(I_hat - I_true);
     elapsed = (double)(end - start) / CLOCKS_PER_SEC;

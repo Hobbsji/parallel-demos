@@ -38,7 +38,7 @@ double monte_carlo_integral_omp(long long N, unsigned int seed) {
         int tid = omp_get_thread_num();
         rng32_t rng = {.s = mix_seed(seed, tid)};
 
-        #pragma parallel for
+        #pragma omp for
         for(long long i=0; i<N; ++i) {
             double x = uniform_01(&rng);
             double y = f(x);
