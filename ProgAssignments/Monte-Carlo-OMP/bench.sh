@@ -5,7 +5,7 @@
 # Problem sizes (N) and thread counts (T) from assignment
 NS=(10000 100000 1000000 10000000 100000000 1000000000)
 SD=2
-THREADS=(1 2 4 8 16)
+THREADS=(2 4 8 16)
 
 # Output CSV file
 CSV_FILE="results.csv"
@@ -43,11 +43,16 @@ for N in "${NS[@]}"; do
   echo "Sequential baselines: Pi=$SEQ_PI s, Int=$SEQ_INT s, Total=$SEQ_TOT s"
   echo
 
-  # Header for OpenMP results
+  # Header for results table
   printf "%-8s %-12s %-12s %-12s %-8s %-8s %-8s\n" \
          "Threads" "Pi(s)" "Int(s)" "Total(s)" "PiSpd" "IntSpd" "TotSpd"
 
-  # Loop over thread counts
+  # Print sequential row as Threads=1
+  printf "%-8s %-12.6f %-12.6f %-12.6f %-8s %-8s %-8s\n" \
+         "1" "$SEQ_PI" "$SEQ_INT" "$SEQ_TOT" "x1.00" "x1.00" "x1.00"
+  echo "$N,1,$SEQ_PI,$SEQ_INT,$SEQ_TOT,1.00,1.00,1.00" >> $CSV_FILE
+
+  # Loop over OpenMP thread counts
   for t in "${THREADS[@]}"; do
     export OMP_NUM_THREADS=$t
     export OMP_PLACES=cores
@@ -78,7 +83,6 @@ for N in "${NS[@]}"; do
     printf "%-8s %-12.6f %-12.6f %-12.6f %-8s %-8s %-8s\n" \
            "$t" "$OMP_PI" "$OMP_INT" "$OMP_TOT" "x$pi_speed" "x$int_speed" "x$tot_speed"
 
-    # Write to CSV
     echo "$N,$t,$OMP_PI,$OMP_INT,$OMP_TOT,$pi_speed,$int_speed,$tot_speed" >> $CSV_FILE
   done
 
