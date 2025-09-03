@@ -33,7 +33,7 @@ double monte_carlo_integral_omp(long long N, unsigned int seed) {
     /* TODO: Put your OpenMP code of monte_carlo_integral here. 
     Note: You need to generate seed per thread, you can call "mix_seed" function defined in "util.h" file. */
     double sum = 0.0;
-    #pragma parallel reduction(+:sum)
+    #pragma omp parallel reduction(+:sum)
     {
         int tid = omp_get_thread_num();
         rng32_t rng = {.s = mix_seed(seed, tid)};
