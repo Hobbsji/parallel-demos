@@ -1,92 +1,123 @@
-#!/bin/bash
-### Benchmark script for Monte Carlo OpenMP Assignment ###
-### Produces both console tables and a CSV file ###
+#!/usr/bin/env bash
+# Benchmark: seq row as "1*", CSV minimal columns, plus console table per N
+set -euo pipefail
 
-# Problem sizes (N) and thread counts (T) from assignment
+# ---- Config ----
 NS=(10000 100000 1000000 10000000 100000000 1000000000)
-SD=2
-THREADS=(2 4 8 16)
+THREADS=(1 2 4 8 16)   # OMP threads; seq is its own "1*" row
+SEED=2
+RUNS=2
 
-# Output CSV file
-CSV_FILE="results.csv"
-echo "N,Threads,Pi(s),Int(s),Total(s),PiSpd,IntSpd,TotSpd" > $CSV_FILE
+SEQ=./seq
+OMP=./omp
 
-# Compile sequential version (define SQ for seq.c)
+OUTCSV=results.csv
+
+# ---- Helpers ----
+mean_f() { awk '{s+=$1} END{if(NR>0) printf "%.6f", s/NR; else print "0"}'; }  # times
+mean_g() { awk '{s+=$1} END{if(NR>0) printf "%.6g", s/NR; else print "0"}'; }  # errors (keep sci)
+
+# Scoped extractors (use Task markers printed by your programs)
+pi_err_of() { awk '
+  /^===== Task 1:/ {in1=1; in2=0; next}
+  /^===== Task 2:/ {in1=0; in2=1; next}
+  in1 && /Absolute error/ {
+    if (match($0, /[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?/)) { print substr($0,RSTART,RLENGTH); exit }
+  }' <<<"$1"; }
+
+int_err_of() { awk '
+  /^===== Task 1:/ {in1=1; in2=0; next}
+  /^===== Task 2:/ {in1=0; in2=1; next}
+  in2 && /Absolute error/ {
+    if (match($0, /[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?/)) { print substr($0,RSTART,RLENGTH); exit }
+  }' <<<"$1"; }
+
+pi_time_of() { awk '
+  /^===== Task 1:/ {in1=1; in2=0; next}
+  /^===== Task 2:/ {in1=0; in2=1; next}
+  in1 && /Time elapsed/ {
+    if (match($0, /[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?/)) { print substr($0,RSTART,RLENGTH); exit }
+  }' <<<"$1"; }
+
+int_time_of() { awk '
+  /^===== Task 1:/ {in1=1; in2=0; next}
+  /^===== Task 2:/ {in1=0; in2=1; next}
+  in2 && /Time elapsed/ {
+    if (match($0, /[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?/)) { print substr($0,RSTART,RLENGTH); exit }
+  }' <<<"$1"; }
+
+# ---- Build ----
 gcc -O2 -std=c11 -DSQ main.c seq.c -o seq -lm
-
-# Compile OpenMP version
 gcc -O2 -fopenmp -std=c11 main.c omp.c -o omp -lm
 
-# Loop over problem sizes
+# ---- CSV header ----
+echo "N,Threads,PiErrMean,PiTime(s),PiSpdUp,IntErrMean,IntTime(s),IntSpdUp" > "$OUTCSV"
+
+# ---- Main loop ----
 for N in "${NS[@]}"; do
-  echo "==============================="
-  echo " Problem size N = $N"
-  echo "==============================="
-
-  # Sequential (3 runs averaged)
-  seq_pi_times=()
-  seq_int_times=()
-  seq_tot_times=()
-  for i in {1..3}; do
-    SEQ_OUTPUT=$(./seq $N $SD)
-    pi_t=$(echo "$SEQ_OUTPUT"  | grep "Time elapsed" | sed -E 's/.*= ([0-9.]+) .*/\1/' | head -n 1)
-    int_t=$(echo "$SEQ_OUTPUT" | grep "Time elapsed" | sed -E 's/.*= ([0-9.]+) .*/\1/' | tail -n 1)
-    tot_t=$(awk -v a=$pi_t -v b=$int_t 'BEGIN {print a+b}')
-    seq_pi_times+=($pi_t)
-    seq_int_times+=($int_t)
-    seq_tot_times+=($tot_t)
-  done
-  SEQ_PI=$(printf "%s\n" "${seq_pi_times[@]}" | awk '{sum+=$1} END {printf "%.6f", sum/NR}')
-  SEQ_INT=$(printf "%s\n" "${seq_int_times[@]}" | awk '{sum+=$1} END {printf "%.6f", sum/NR}')
-  SEQ_TOT=$(printf "%s\n" "${seq_tot_times[@]}" | awk '{sum+=$1} END {printf "%.6f", sum/NR}')
-
-  echo "Sequential baselines: Pi=$SEQ_PI s, Int=$SEQ_INT s, Total=$SEQ_TOT s"
   echo
+  echo "=== N=$N ==="
+  printf "%-6s %-10s %-10s %-8s %-12s %-12s %-8s\n" \
+         "Thr" "PiErr" "PiTime" "PiSpd" "IntErr" "IntTime" "IntSpd"
 
-  # Header for results table
-  printf "%-8s %-12s %-12s %-12s %-8s %-8s %-8s\n" \
-         "Threads" "Pi(s)" "Int(s)" "Total(s)" "PiSpd" "IntSpd" "TotSpd"
+  # ----- Sequential baseline (RUNS averaged) -----
+  seq_pi_errs=(); seq_pi_ts=()
+  seq_int_errs=(); seq_int_ts=()
 
-  # Print sequential row as Threads=1
-  printf "%-8s %-12.6f %-12.6f %-12.6f %-8s %-8s %-8s\n" \
-         "1" "$SEQ_PI" "$SEQ_INT" "$SEQ_TOT" "x1.00" "x1.00" "x1.00"
-  echo "$N,1,$SEQ_PI,$SEQ_INT,$SEQ_TOT,1.00,1.00,1.00" >> $CSV_FILE
+  for r in $(seq 1 "$RUNS"); do
+    OUT="$($SEQ "$N" "$SEED")"
+    seq_pi_errs+=("$(pi_err_of  "$OUT")")
+    seq_pi_ts+=("$(pi_time_of "$OUT")")
+    seq_int_errs+=("$(int_err_of "$OUT")")
+    seq_int_ts+=("$(int_time_of "$OUT")")
+  done
 
-  # Loop over OpenMP thread counts
+  SEQ_PI_ERR=$( printf "%s\n" "${seq_pi_errs[@]}" | mean_g )
+  SEQ_PI_TIME=$(printf "%s\n" "${seq_pi_ts[@]}"   | mean_f )
+  SEQ_INT_ERR=$( printf "%s\n" "${seq_int_errs[@]}"| mean_g )
+  SEQ_INT_TIME=$(printf "%s\n" "${seq_int_ts[@]}"  | mean_f )
+
+  # Console row for seq (Threads = 1*)
+  printf "%-6s %-10s %-10.6f %-8s %-12s %-12.6f %-8s\n" \
+         "1*" "$SEQ_PI_ERR" "$SEQ_PI_TIME" "1.00" "$SEQ_INT_ERR" "$SEQ_INT_TIME" "1.00"
+
+  # CSV row for seq
+  echo "$N,1*,$SEQ_PI_ERR,$SEQ_PI_TIME,1.00,$SEQ_INT_ERR,$SEQ_INT_TIME,1.00" >> "$OUTCSV"
+
+  # ----- OpenMP runs for each t -----
   for t in "${THREADS[@]}"; do
-    export OMP_NUM_THREADS=$t
+    export OMP_NUM_THREADS="$t"
     export OMP_PLACES=cores
     export OMP_PROC_BIND=close
 
-    pi_times=()
-    int_times=()
-    tot_times=()
+    omp_pi_errs=(); omp_pi_ts=()
+    omp_int_errs=(); omp_int_ts=()
 
-    for i in {1..3}; do
-      OMP_OUTPUT=$(./omp $N $SD)
-      pi_t=$(echo "$OMP_OUTPUT"  | grep "Time elapsed" | sed -E 's/.*= ([0-9.]+) .*/\1/' | head -n 1)
-      int_t=$(echo "$OMP_OUTPUT" | grep "Time elapsed" | sed -E 's/.*= ([0-9.]+) .*/\1/' | tail -n 1)
-      tot_t=$(awk -v a=$pi_t -v b=$int_t 'BEGIN {print a+b}')
-      pi_times+=($pi_t)
-      int_times+=($int_t)
-      tot_times+=($tot_t)
+    for r in $(seq 1 "$RUNS"); do
+      OUT="$($OMP "$N" "$SEED")"
+      omp_pi_errs+=("$(pi_err_of  "$OUT")")
+      omp_pi_ts+=("$(pi_time_of "$OUT")")
+      omp_int_errs+=("$(int_err_of "$OUT")")
+      omp_int_ts+=("$(int_time_of "$OUT")")
     done
 
-    OMP_PI=$(printf "%s\n" "${pi_times[@]}"  | awk '{sum+=$1} END {printf "%.6f", sum/NR}')
-    OMP_INT=$(printf "%s\n" "${int_times[@]}" | awk '{sum+=$1} END {printf "%.6f", sum/NR}')
-    OMP_TOT=$(printf "%s\n" "${tot_times[@]}" | awk '{sum+=$1} END {printf "%.6f", sum/NR}')
+    OMP_PI_ERR=$( printf "%s\n" "${omp_pi_errs[@]}" | mean_g )
+    OMP_PI_TIME=$(printf "%s\n" "${omp_pi_ts[@]}"   | mean_f )
+    OMP_INT_ERR=$( printf "%s\n" "${omp_int_errs[@]}"| mean_g )
+    OMP_INT_TIME=$(printf "%s\n" "${omp_int_ts[@]}"  | mean_f )
 
-    pi_speed=$(awk -v seq=$SEQ_PI  -v omp=$OMP_PI  'BEGIN {printf "%.2f", seq/omp}')
-    int_speed=$(awk -v seq=$SEQ_INT -v omp=$OMP_INT 'BEGIN {printf "%.2f", seq/omp}')
-    tot_speed=$(awk -v seq=$SEQ_TOT -v omp=$OMP_TOT 'BEGIN {printf "%.2f", seq/omp}')
+    # Speedups vs sequential means
+    pi_spd=$(  awk -v s="$SEQ_PI_TIME"  -v o="$OMP_PI_TIME"  'BEGIN{printf "%.2f", s/o}' )
+    int_spd=$( awk -v s="$SEQ_INT_TIME" -v o="$OMP_INT_TIME" 'BEGIN{printf "%.2f", s/o}' )
 
-    printf "%-8s %-12.6f %-12.6f %-12.6f %-8s %-8s %-8s\n" \
-           "$t" "$OMP_PI" "$OMP_INT" "$OMP_TOT" "x$pi_speed" "x$int_speed" "x$tot_speed"
+    # Console row for OMP
+    printf "%-6s %-10s %-10.6f %-8s %-12s %-12.6f %-8s\n" \
+           "$t" "$OMP_PI_ERR" "$OMP_PI_TIME" "$pi_spd" "$OMP_INT_ERR" "$OMP_INT_TIME" "$int_spd"
 
-    echo "$N,$t,$OMP_PI,$OMP_INT,$OMP_TOT,$pi_speed,$int_speed,$tot_speed" >> $CSV_FILE
+    # CSV row
+    echo "$N,$t,$OMP_PI_ERR,$OMP_PI_TIME,$pi_spd,$OMP_INT_ERR,$OMP_INT_TIME,$int_spd" >> "$OUTCSV"
   done
-
-  echo
 done
 
-echo "Results saved to $CSV_FILE"
+echo
+echo "Wrote $OUTCSV"
